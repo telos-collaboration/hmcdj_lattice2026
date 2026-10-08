@@ -1,0 +1,4 @@
+deck: "./TwoFundamentalFermions"
+track: TwoFundamentalFermionsTrack.yaml
+
+plot_type: pdf

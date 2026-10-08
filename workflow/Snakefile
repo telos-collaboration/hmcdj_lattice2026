@@ -1,0 +1,30 @@
+configfile: "config/config.yaml"
+
+
+rule all:
+    input:
+        f"assets/plots/acceptancetuning.{config['plot_type']}"
+
+
+rule generate:
+    input:
+        deck=config["deck"],
+        track=config["track"],
+    output:
+        log="intermediary_data/acceptancetuning.log",
+    shadow: "copy-minimal"
+    shell:
+        "HMCDJ_BASE_PATH=./hmcdj_ensembles {input.deck} {input.track} --Log Debug > {output.log}"
+
+
+rule plot:
+    input:
+        data="intermediary_data/{filename}.log",
+        script="src/plot.py",
+        plot_styles="styles/prd.mplstyle",
+    output:
+        plot=f"assets/plots/{{filename}}.{config['plot_type']}",
+    conda:
+        "envs/plot.yml"
+    shell:
+        "python3.14 {input.script} {input.data} {output.plot} --plot_styles {input.plot_styles}"

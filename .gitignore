@@ -1,0 +1,6 @@
+.snakemake/
+intermediary_data/
+assets/
+
+TwoFundamentalFermions
+TwoFundamentalFermionsTrack.yaml
